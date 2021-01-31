@@ -1,0 +1,52 @@
+/* Global Style */
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  height: calc( 100vh - 48px );
+}
+body * {
+  box-sizing: border-box;
+}
+p, span {
+  font-size: 1rem;
+}
+
+/* Container Style */
+header .item {
+  height: 48px;
+}
+footer {
+  height: 48px;
+}
+main {
+  margin: 48px 0;
+}
+#helper {
+  font-size: 1.2rem;
+}
+
+/* Note Style */
+.note {
+  position: relative;
+  background-color: #fff;
+  padding: 8px 16px;
+  word-break: break-word;
+}
+.note .badge {
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  border-style: solid;
+  border-width: 0 1.2rem 1.2rem 0;
+  border-color: transparent;
+}
+.note span.title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.note span.date {
+  margin-left: 8px;
+  color: #888;
+}

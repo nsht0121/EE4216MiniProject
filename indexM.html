@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EE4216 Mini-Project Mobile Client</title>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
+    <link rel="stylesheet" href="styleM.css"></script>
+    <style id="pageStyle">
+      html {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- Top Toolbar -->
+      <header class="ui inverted fixed menu">
+        <div class="logo borderless item">Sticky Notes</div>      
+
+        <div class="right menu">
+          <button class="ui button item" @click="onHelp"><i class="question circle icon"></i>Help</button>
+          <button v-if="isSignIn" class="ui button item" @click="onLogOut"><i class="sign out alternate icon"></i>{{ currentUser }} / Sign Out</button>
+          <button v-else class="ui button item" @click="onLogIn"><i class="sign in alternate icon"></i>Sign In</button>
+
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="ui fluid container">
+        <div class="ui segments">
+          <app-note
+            v-for="(value, index) in noteList"
+            :key="index"
+            :data="value"
+            class="ui segment"
+            @on-note-edit="onNoteEdit"
+          ></app-note>
+        </div>
+      </main>
+
+      <!-- Bottom Toolbar -->
+      <footer class="ui inverted bottom fixed fluid four item menu">
+        <button class="ui icon button item" @click="onSearch"><i class="search icon"></i></button>
+
+        <div id="resizer" class="ui icon top left pointing dropdown item">
+          <i class="font icon"></i>
+          <div class="menu">
+            <div class="item" @click="changeFontResizer('small')" :class="{ active: activeFontSize['small'] }">Small</div>
+            <div class="item" @click="changeFontResizer('default')" :class="{ active: activeFontSize['default'] }">Normal</div>
+            <div class="item" @click="changeFontResizer('large')" :class="{ active: activeFontSize['large'] }">Large</div>
+          </div>
+        </div>
+
+        <div id="sorter" class="ui icon top left pointing dropdown item">
+          <i class="sort icon"></i>
+          <div class="menu">
+            <div class="item" @click="onSort('id')" :class="{ active: activeSorter['id'] }">ID</div>
+            <div class="item" @click="onSort('title')" :class="{ active: activeSorter['title'] }">Title</div>
+            <div class="item" @click="onSort('date')" :class="{ active: activeSorter['date'] }">Date</div>
+          </div>
+        </div>
+        
+        <button class="ui icon button item" @click="onNoteCreate"><i class="plus icon"></i></button>
+      </footer>
+
+      <!-- Modal -->
+      <app-edit-form :data="form[editorMode]"></app-edit-form>
+
+      <div id="logging" class="ui fullscreen modal">
+        <i class="close icon"></i>
+        <div class="header">Sign In</div>
+
+        <div class="content">
+          <form id="form-login" class="ui form">
+            <div class="field">
+              <label for="input-ac">username</label>
+              <input type="text" id="input-ac" name="username" placeholder="Username">
+            </div>
+            <div class="field">
+              <label for="input-pw">Password</label>
+              <input type="password" id="input-pw" name="password" placeholder="Password">
+            </div>
+          </form>
+        </div>
+
+        <div class="actions">
+          <div class="ui red deny button">Close</div>
+          <div class="ui positive button">Login</div>
+        </div>
+      </div>
+
+      <div id="helper" class="ui fullscreen modal">
+        <i class="close icon"></i>
+        <div class="header">Need Help?</div>
+
+        <div class="content">
+          <div class="ui list">
+            <div class="item"><i class="search icon"></i> Search notes with keywords</div>
+            <div class="item"><i class="font icon"></i> Change the font size</div>
+            <div class="item"><i class="sort icon"></i> Sort the notes by field</div>
+            <div class="item"><i class="plus icon"></i> Create a note</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <div class="ui deny button">Close</div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"
+      integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"
+      integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+    <script src="scriptM.js"></script>
+  </body>
+</html>
